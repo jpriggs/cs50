@@ -1,0 +1,4 @@
+0. The framewrok allows from a min of 3x3 to a max of 9x9.
+1. A two dimensional array.
+2. greet()
+3. init(), draw(), move(), won()

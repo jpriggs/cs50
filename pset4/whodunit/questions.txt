@@ -1,0 +1,15 @@
+1.  stdint.h is a header file that allows the programmer to specify typedefs that can manipulate values at certain memory locations.
+2.  They're aliases for integer types that set unsigned bits to set integer sizes so they are consistent across different hardware 
+    and environments
+3.  BYTE = 1 byte, DWORD = 4 bytes, LONG = 4 bytes, WORD = 2 bytes.
+4.  In hexidecimal BM: B = 0x42, M = 0x4D.
+5.  bfSize is the total size in bytes of the .bmp file, and biSize is the number of bytes in the header file.
+6.  A top-down DIB (device-independent bitmap) is used and the origin start from the upper left corner. And it cannot be compressed.
+7.  biBitCount
+8.  If it can't find (read) the file in line 24 or output (write) to a file in line 32, it will return a NULL result error.
+9.  Specifies the number of elements in a file read by fread, which is just 1 element from each header file represented in lines 42 
+    and 46 in copy.c
+10. Based on mod 4, it will return a value of 1 (byte).
+11. fseek is a function that changes the location of the file pointer within the program and the offset changes how many bytes you 
+    want to move the pointer over.
+12. SEEK_CUR changes the pointer location based on the offset.
