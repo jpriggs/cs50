@@ -1,0 +1,7 @@
+0.  Depending on the definition of what constitues a legitimate word, the 3rd or 4th largest word in the English language or the maximum length of a 'word' defined at 45 characters in our program.
+1.  Returns resource usage measurements
+2.  16 members
+3.  The function expects a pointer to be passed into its parameters. 
+4.  The for loop on each iteration checks each character in a word. It will accept alphabetical letters and apostrophies "'" as long as the apostrophy is not at index 0 in the word. On each iteration it will add the character to the "word" array and increment it's index forward one position. If the loop encounters a word longer than the defined LENGTH of 45 charcaters, it will skip over all the characters in that word and move onto the next word, returning the word array index beck to zero. The loop will ignore numbers. If the loop has found a complete word, demarcated with an end character of '\0', then the loop will increment the total words counter by one, it will compare the characters in the array against those in the dictionary, calculate the time it took to check, increment the misspelled words counter and print the misspelled words if any, and reset the index to zero for the next word.
+5.  We know the end of a word because of the '\0' character. If we scan a using fscanf, spaces between words may be included in the spellcheck operation resulting in errors.
+6.  So the data at those pointer addresses are not changed to new values as the functions are only reading data, not writing it to those memory addresses.
