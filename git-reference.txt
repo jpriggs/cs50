@@ -6,6 +6,7 @@ Git commands:
 - git add : Adds new files to be tracked by git
 - git commit : Save the changes made to files to the repository, ready to be pushed
 - git push origin Y : put the local changes that you have made to the online Y branch (same name as your current branch)
+- git pull origin Y : pull the changes from the remote Y branch to your local environment
 
 *** Creating a new branch
 - git branch Y : Create the blank branch of name Y
