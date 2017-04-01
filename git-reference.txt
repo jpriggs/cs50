@@ -1,0 +1,14 @@
+Git commands:
+
+*** The basics:
+- git status : Shows what files have been changed (not their contents)
+- git diff : Shows the contents of files that have been changes (if not binary)
+- git add : Adds new files to be tracked by git
+- git commit : Save the changes made to files to the repository, ready to be pushed
+- git push origin Y : put the local changes that you have made to the online Y branch (same name as your current branch)
+
+*** Creating a new branch
+- git branch Y : Create the blank branch of name Y
+- git checkout Y : Change our working branch to Y
+**** Shortcut
+- git checkout -b Y : Creates a new branch Y and checks it out in a single command
