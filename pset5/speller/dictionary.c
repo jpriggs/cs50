@@ -68,6 +68,7 @@ bool check(const char *word)
  */
 bool load(const char *dictionary)
 {
+    printf("THIS IS FUCKED UP CODE");
     // TODO
     //open a dictionary to be read and make sure it exists
     FILE *readptr = fopen(dictionary, "r");
