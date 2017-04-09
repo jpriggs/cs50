@@ -64,43 +64,37 @@ def cipher_convert():
     
     # iterates over each character in plain text
     for i in range (len(plainText)):
-        
+
         # checks if the current character in the plain text is an alphabetical character or not
         if plainText[i].isalpha():
+
+            # creates the cipher key character wraparound if it doesn't match the plain text input length
+            cipherCursor = cipherIterator % keyLength
+
+            # converts the current cipher key character to a lowercased integer offset value
+            cipherKeyValue = (ord(cipherKey[cipherCursor].lower()) - lowercaseOffset)
             
             # checks if the current character in the plain text is a lowercase character
             if plainText[i].islower():
                 
-                # creates the cipher key character wraparound if it doesn't match the plain text input length
-                cipherCursor = cipherIterator % keyLength
+                # sets the offset to the lowercase value
+                offset = lowercaseOffset
                 
-                # converts the current cipher key character to a lowercased integer offset value
-                cipherKeyValue = (ord(cipherKey[cipherCursor].lower()) - lowercaseOffset)
-                
-                # offsets the current plain text character integer value by the cipher key integer value
-                newCharValue = ((ord(plainText[i]) + cipherKeyValue - lowercaseOffset) % alphabet) + lowercaseOffset
-                
-                # converts the current enciphered integer value back to an alphabetical character and stores it in an array
-                convertedString += chr(newCharValue)
-            
-            # in the case the current character in the plain text is an uppercase character    
+            # in the case the current character in the plain text is an uppercase character
             else:
                 
-                # creates the cipher key character wraparound if it doesn't match the plain text input length
-                cipherCursor = cipherIterator % keyLength
-                
-                # converts the current cipher key character to a lowercased integer offset value
-                cipherKeyValue = (ord(cipherKey[cipherCursor].lower()) - lowercaseOffset)
-                
-                # offsets the current plain text character integer value by the cipher key integer value
-                newCharValue = ((ord(plainText[i]) + cipherKeyValue - uppercaseOffset) % alphabet) + uppercaseOffset
-                
-                # converts the current enciphered integer value back to an alphabetical character and stores it in the array
-                convertedString += chr(newCharValue)
-            
+                # sets the offset to the uppercase value
+                offset = uppercaseOffset
+
+            # offsets the current plain text character integer value by the cipher key integer value
+            newCharValue = ((ord(plainText[i]) + cipherKeyValue - offset) % alphabet) + offset
+
+            # converts the current enciphered integer value back to an alphabetical character and stores it in the array
+            convertedString += chr(newCharValue)
+
             # moves the current cipher key character forward one position    
             cipherIterator += 1
-        
+
         # in the case that the current character in plain text is not an alphabetical character    
         else:
             
