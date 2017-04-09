@@ -11,7 +11,7 @@ def main():
     
     # output the enciphered plaintext
     encipheredText = cipher_convert()
-    print("ciphertext: ", encipheredText, end="")
+    print("ciphertext: ", encipheredText)
 
 # prototype to check correct number of command-line arguments and if the cipherkey is valid
 def valid_cipherkey():
@@ -41,7 +41,7 @@ def valid_cipherkey():
 # prototype to make sure the user inputs some plain text    
 def valid_plaintext():
     
-    plainText == None
+    plainText = None
     
     while plainText == None:
         
@@ -59,7 +59,7 @@ def cipher_convert():
     cipherKey = valid_cipherkey()
     keyLength = len(cipherKey)
     plainText = valid_plaintext()
-    storedChars = []
+    convertedString = ""
     cipherIterator = 0
     
     # iterates over each character in plain text
@@ -75,13 +75,13 @@ def cipher_convert():
                 cipherCursor = cipherIterator % keyLength
                 
                 # converts the current cipher key character to a lowercased integer offset value
-                cipherKeyValue = (ord(cipherKey[cipherCursor].tolower()) - lowercaseOffset)
+                cipherKeyValue = (ord(cipherKey[cipherCursor].lower()) - lowercaseOffset)
                 
                 # offsets the current plain text character integer value by the cipher key integer value
                 newCharValue = ((ord(plainText[i]) + cipherKeyValue - lowercaseOffset) % alphabet) + lowercaseOffset
                 
                 # converts the current enciphered integer value back to an alphabetical character and stores it in an array
-                storedChars[i] = chr(newCharValue)
+                convertedString += chr(newCharValue)
             
             # in the case the current character in the plain text is an uppercase character    
             else:
@@ -90,13 +90,13 @@ def cipher_convert():
                 cipherCursor = cipherIterator % keyLength
                 
                 # converts the current cipher key character to a lowercased integer offset value
-                cipherKeyValue = (ord(cipherKey[cipherCursor].tolower()) - lowercaseOffset)
+                cipherKeyValue = (ord(cipherKey[cipherCursor].lower()) - lowercaseOffset)
                 
                 # offsets the current plain text character integer value by the cipher key integer value
                 newCharValue = ((ord(plainText[i]) + cipherKeyValue - uppercaseOffset) % alphabet) + uppercaseOffset
                 
                 # converts the current enciphered integer value back to an alphabetical character and stores it in the array
-                storedChars[i] = chr(newCharValue)
+                convertedString += chr(newCharValue)
             
             # moves the current cipher key character forward one position    
             cipherIterator += 1
@@ -105,10 +105,10 @@ def cipher_convert():
         else:
             
             # make no change to the current character in the plain text and store it in the array
-            storedChars[i] = plainText[i]
+            convertedString += plainText[i]
     
     # return the values in the array back to the function        
-    return storedChars
+    return convertedString
 
 # calls the main function    
 if __name__ == "__main__":
