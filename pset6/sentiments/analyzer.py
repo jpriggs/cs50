@@ -10,8 +10,7 @@ class Analyzer():
         # declare 2 empty lists to store all words in the postive and negative words text seperately 
         self.positiveWords = set()
         self.negativeWords = set()
-        self.tweetLimit = 50
-        
+
         # opens the positive-words.txt file
         file = open(positives, "r")
         lines = file.readlines()

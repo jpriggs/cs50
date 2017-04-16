@@ -2,8 +2,30 @@
 
 {% block subtext %}
 @{{ screen_name }}
+<h2>Looked up {{ totalTweets }} tweets</h2>
 {% endblock %}
 
 {% block body %}
+<style>
+    .table-striped tr:hover {
+      background-color:#c2c2ff;
+    }
+    .table-striped>tbody>tr:nth-of-type(odd)>td {
+      color:#4b4bff;
+    }
+    .table-striped>tbody>tr:nth-of-type(odd):hover {
+      background-color:#ffdcdc;
+    }
+  </style>
 {{ chart | safe }}
+<h3>Tweets list</h3>
+<table class="table-striped">
+    <tbody>
+    {% for tweet in tweets %}    
+    <tr>
+      <td>{{ tweet }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

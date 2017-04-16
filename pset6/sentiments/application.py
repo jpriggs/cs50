@@ -38,31 +38,23 @@ def search():
     
     # iterate over each tweet and score them positive, negative, or neutral
     for tweet in tweets:
-        
+
         tweetValue = analyzer.analyze(tweet)
-        
-        if tweetValue < 0.0:
-            
+
+        if tweetValue > 0.0:
+
             positive += 1
 
-        elif tweetValue > 0.0:
+        elif tweetValue < 0.0:
             
             negative += 1
 
         else:
-            
+
             neutral += 1
     
-    # adjust the total values of the positive, negative and neutral scores based on total number of tweets
-    if len(tweets) < 100:
-        
-        positive = (positive / len(tweets)) * 100
-        negative = (negative / len(tweets)) * 100
-        neutral = (neutral / len(tweets)) * 100
-            
     # generate chart
     chart = helpers.chart(positive, negative, neutral)
 
     # render results
-    return render_template("search.html", chart=chart, screen_name=screen_name)
-    
+    return render_template("search.html", chart=chart, screen_name=screen_name, totalTweets=len(tweets), tweets=tweets)
