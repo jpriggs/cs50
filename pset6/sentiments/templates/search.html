@@ -7,23 +7,24 @@
 
 {% block body %}
 <style>
-    .table-striped tr:hover {
-      background-color:#c2c2ff;
+    .tweet-text {
+        padding-left: 5px;
     }
-    .table-striped>tbody>tr:nth-of-type(odd)>td {
-      color:#4b4bff;
+    .tweet-index {
+        text-align:right;
     }
-    .table-striped>tbody>tr:nth-of-type(odd):hover {
-      background-color:#ffdcdc;
+    tr {
+        border-bottom: 1px solid #ccc;
     }
-  </style>
+</style>
 {{ chart | safe }}
 <h3>Tweets list</h3>
 <table class="table-striped">
     <tbody>
-    {% for tweet in tweets %}    
+    {% for tweet in tweets %}
     <tr>
-      <td>{{ tweet }}</td>
+      <td class="tweet-index">{{ loop.index }}</td>
+      <td class="tweet-text" style="color:{{ tweet.GetColor() }}">{{ tweet.text }}</td>
     </tr>
     {% endfor %}
   </tbody>
