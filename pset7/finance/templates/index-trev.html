@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<style>
+    
+.spinner {
+  margin: 0px;
+  width: 40px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 8px;
+  height: 8px;
+  margin-bottom: 4px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+</style>
+<div class="container">
+    <h1 align="left"><i>(Trev) Your portfolio:</i></h1>
+    <main style="font-size: 1.5em">
+        <div class="col-md-8 col-md-offset-2">
+            <p align="right"><b>Account Balance:</b> <span id="user-balance">{{ userBalance|usd }}</span></p>
+            <table class="table table-condensed">
+                <br></br>
+                <thead>
+                    <tr>
+                       <th>Symbol</th>
+                       <th>Name</th>
+                       <th>Shares</th>
+                       <th>Price</th>
+                       <th colspan="2">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in userPortfolio %}
+                    <tr>
+                       <td class="stock-symbol">{{ stock["symbol"] }}</td>
+                       <td>{{ stock["name"] }}</td>
+                       <td id="{{ stock["symbol"] }}-shares">{{ stock["shares"] }}</td>
+                       <td id="{{ stock["symbol"] }}-price">{{ stock["price"]|usd }}</td>
+                       <td id="{{ stock["symbol"] }}-total">{{ (stock["price"] * stock["shares"])|usd }}</td>
+                       <td class="loading-display hidden-md hidden-sm hidden-xs">
+                           <span class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>
+                       </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br></br>
+            <p align="right"><b>Portfolio Total Value:</b> <span id="portfolio-value">{{ totalValue|usd }}</span></p>
+            <div class="text-right">
+                <button id="refresh-button" class="btn btn-info btn-disabled" onclick="refresh_stocks();">Refresh</button>
+            </div>
+        </div>
+    </main>
+</div>
+<div id="test"></div>
+
+<script>
+refresh_stocks();
+    function refresh_stocks()
+    {
+        $("#refresh-button").prop("disabled", true);
+        $(".loading-display").show();
+        var user_balance = parseFloat($("#user-balance").text().replace("$", "").replace(",",""));
+        var portfolio_value = user_balance;
+        var stock_symbols_list = $(".stock-symbol");
+        var stocks = [];
+        for(var i = 0; i < stock_symbols_list.length; i++)
+        {
+            stocks.push(stock_symbols_list[i].innerText);
+        }
+        console.log(stocks)
+    
+        var test_data = {"stocks":stocks};
+        $.post("/api/update/stocks", JSON.stringify(test_data), function(result){
+            
+            result = JSON.parse(result);
+            console.log(result);
+            for(var i = 0; i < stocks.length; i++)
+            {
+                var this_symbol = stocks[i];
+                if(this_symbol in result)
+                {
+                    $("#"+this_symbol+"-price").text("$"+result[this_symbol].toFixed(2));
+                    var stock_count = parseInt($("#"+this_symbol+"-shares").text());
+                    var stock_total_val = (result[this_symbol]*stock_count).toFixed(2);
+                    portfolio_value += parseFloat(stock_total_val);
+                    $("#"+this_symbol+"-total").text("$"+stock_total_val);
+                }
+                else
+                {
+                    console.log("Could not find: " + this_symbol);
+                }
+            }
+            $("#portfolio-value").text("$"+portfolio_value.toFixed(2));
+            $(".loading-display").hide();
+            $("#refresh-button").prop("disabled", false);
+        });
+    }
+</script>
+{% endblock %}

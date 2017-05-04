@@ -444,3 +444,55 @@ def add_funds():
     
     # redirect user back to the index page
     return redirect(url_for("index"))
+
+################################ Trevor Code reference #############################
+@app.route("/trev")
+def trev():
+    session["user_id"] = 4
+    
+    # connects the data from the stocks table to data in the portfolio table by the stock id
+    currentUserID = session["user_id"]
+    userPortfolioStock = db.execute("SELECT symbol, name, shares, price FROM portfolio JOIN stocks ON portfolio.stock_id = stocks.id WHERE user_id = :user_id", user_id=currentUserID)
+    
+    # get the user's total remaining cash from the users database table
+    userBalance = db.execute("SELECT cash FROM users WHERE id = :id", id=currentUserID)
+    userBalance = userBalance[0]["cash"]
+    
+    # sum the total value of all stocks owned and cash held
+    totalValue = userBalance
+
+    for stockDict in userPortfolioStock:
+
+        totalValue += stockDict["price"] * stockDict["shares"]
+
+    return render_template("index-trev.html", userPortfolioStock=userPortfolioStock, userBalance=userBalance, totalValue=totalValue)
+
+@app.route("/api/update/stocks", methods=["POST"])
+def update_stocks():
+    import json
+    if request.method != "POST":
+        return "lol"
+    
+    print(request.form)
+    stocks_to_update = json.loads(list(request.form)[0])
+    print(stocks_to_update)
+    
+    stock_values = {}
+    
+    for stock_symbol in stocks_to_update["stocks"]:
+        print(stock_symbol)
+
+        db_stock_data = db.execute("SELECT id, symbol, name, price FROM stocks WHERE symbol = :symbol", symbol=stock_symbol)
+    
+        # checks if stock information exists in the database, if it does, it updates the current stock price         
+        if not db_stock_data:
+            continue
+        
+        stock_data = lookup(stock_symbol)
+        print("Current price: ", db_stock_data[0]["price"])
+        print("New price: ", stock_data["price"])
+        db.execute("UPDATE stocks SET price = :price WHERE symbol = :symbol", price=stock_data["price"], symbol=stock_data["symbol"])
+        print("-----------")
+        stock_values[stock_data["symbol"]] = stock_data["price"]
+    return json.dumps(stock_values)
+    
