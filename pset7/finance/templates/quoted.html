@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 align="left"><i>Your requested quote:</i></h1>
+    <br></br>
+    <main style="font-size: 1.5em">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                       <th>Symbol</th>
+                       <th>Name</th>
+                       <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                       <td>{{ quote.symbol }}</td>
+                       <td>{{ quote.name }}</td>
+                       <td>{{ quote.price|usd }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% endblock %}

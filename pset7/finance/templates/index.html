@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 align="left"><i>Your Current Portfolio:</i></h1>
+    <main style="font-size: 1.5em">
+        <div class="col-md-8 col-md-offset-2">
+            <p align="right"><b>Account Balance:</b> {{ userBalance|usd }}</p>
+            <table class="table table-condensed">
+                <br></br>
+                <thead>
+                    <tr>
+                       <th>Symbol</th>
+                       <th>Name</th>
+                       <th>Shares</th>
+                       <th>Price</th>
+                       <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in userPortfolioStock %}
+                    <tr>
+                       <td>{{ stock["symbol"] }}</td>
+                       <td>{{ stock["name"] }}</td>
+                       <td>{{ stock["shares"] }}</td>
+                       <td>{{ stock["price"]|usd }}</td>
+                       <td>{{ (stock["price"] * stock["shares"])|usd }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br></br>
+            <p align="right"><b>Portfolio Total Value:</b> {{ totalValue|usd }}</p>
+        </div>
+    </main>
+</div>
+{% endblock %}

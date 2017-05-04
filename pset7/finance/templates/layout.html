@@ -10,7 +10,6 @@
 
         <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
 
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -42,6 +41,8 @@
                                 <li><a href="{{ url_for('buy') }}">Buy</a></li>
                                 <li><a href="{{ url_for('sell') }}">Sell</a></li>
                                 <li><a href="{{ url_for('history') }}">History</a></li>
+                                <li><a href="{{ url_for('add_funds') }}">Add Funds</a></li>
+                                <li><a href="{{ url_for('password_change') }}">Change Password</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>

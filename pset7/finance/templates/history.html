@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 align="left"><i>Your Transaction History:</i></h1>
+    <main style="font-size: 1.5em">
+        <div class="col-md-12 col-md-offset-0">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                       <th>Order Type</th>
+                       <th>Symbol</th>
+                       <th>Name</th>
+                       <th>Shares</th>
+                       <th>Amount</th>
+                       <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in userTransactionHistory %}
+                    <tr>
+                       <td>{{ transaction["type"] }}</td>
+                       <td>{{ transaction["symbol"] }}</td>
+                       <td>{{ transaction["name"] }}</td>
+                       <td>{{ transaction["shares"] }}</td>
+                       <td>{{ transaction["price"]|usd }}</td>
+                       <td>{{ transaction["date"] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% endblock %}
