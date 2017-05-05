@@ -381,17 +381,25 @@ def password_change():
         return render_template("password_change.html")
 
     # ensure the user did not leave any fields blank
-    if not request.form.get("newPassword") or not request.form.get("confirm_password"):
+    if not request.form.get("currentPassword") or not request.form.get("newPassword") or not request.form.get("confirm_password"):
         
         return apology("please enter your current password and a new password")
+    
+    # ensure user's current password entered matches the current password in the database
+    currentUserID = session["user_id"]
+    currentHash = db.execute("SELECT hash FROM users WHERE id = :id", id=currentUserID)
+    currentHash = currentHash[0]["hash"]
 
+    if not pwd_context.verify(request.form.get("currentPassword"), currentHash):
+        
+        return apology("invalid current password")
+        
     # ensure that both passwords match
     if request.form.get("newPassword") != request.form.get("confirm_password"):
         
         return apology("passwords don't match, please re-enter your new passwords")
     
     # encrypt new password and update the password hash in the users database    
-    currentUserID = session["user_id"]
     newHash = pwd_context.encrypt(request.form.get("newPassword")) 
     result = db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash=newHash, id=currentUserID)
     
