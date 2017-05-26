@@ -44,19 +44,17 @@ def articles():
     # make sure that the user entered location can be found in the database
     if not articles:
         raise RuntimeError("Error Occured: Articles could not be fetched")
-    return jsonify(articles)
+    return jsonify(articles[:5])
 
 @app.route("/search")
 def search():
     """Search for places that match query."""
     
     # TODO
-    
     location = request.args.get("q") + "%"
-    
     # ensure user enters something into the search form
     if not location:
-        return render_template("index.html", key=API_KEY)
+        return
 
     # stores a dictionary of keys and values of all columns matching the user inputted location
     locationData = db.execute("SELECT * FROM places WHERE postal_code LIKE :location OR place_name LIKE :location OR admin_code1 LIKE :location OR admin_name1 LIKE :location", location=location)
