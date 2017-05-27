@@ -196,7 +196,6 @@ function configure()
 function removeMarkers()
 {
     // iterate through each remembered marker and set each map marker to null
-    // https://stackoverflow.com/questions/20101805/how-to-remove-a-single-marker-from-google-map
     for (var i = 0; i < markers.length; i++)
     {
         markers[i].setMap(null);

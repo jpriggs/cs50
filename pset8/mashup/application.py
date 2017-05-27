@@ -49,9 +49,10 @@ def articles():
 @app.route("/search")
 def search():
     """Search for places that match query."""
-    
     # TODO
+    
     location = request.args.get("q") + "%"
+    
     # ensure user enters something into the search form
     if not location:
         return
